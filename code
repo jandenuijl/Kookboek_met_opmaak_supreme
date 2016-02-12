@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+<link href='https://fonts.googleapis.com/css?family=Crafty+Girls' rel='stylesheet' type='text/css'>
+</link>
+<meta charset="utf-8">
+<title>KookBoekApp</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+</head>
+<style>
+p {
+	text-align: center;	
+	font-family: 'Times New Roman';
+	font-size: 50px;
+}
+html {
+	height: 100%;
+	}
+body {
+	min-height: 100%;
+	margin-top: 100px;
+	background: rgb(122, 255, 0);
+}
+.End {
+	text-align: center;	
+}
+.ja-nee {
+	position: absolute;
+	top: 0;
+	left: -100%;
+	overflow: hidden;
+}
+.invoerT {
+	position: absolute;
+	top: 0;
+	left: -100%;
+	overflow: hidden;
+}
+.invoer1 {
+	position: absolute;
+	top: 0;
+	left: -100%;
+	overflow: hidden;
+}
+.invoer2{
+	position: absolute;
+	top: 0;
+	left: -100%;
+	overflow: hidden;
+}
+.invoerG {
+	position: absolute;
+	top: 0;
+	left: -100%;
+	overflow: hidden;
+}
+#input-btn {
+	font-family: 'Times New Roman', cursive;
+	font-size: 50px;
+	border: 5px solid #FF00FF;
+	background-color: #343;
+	border-radius: 50px;
+}
+#input-btn.active {
+	position: absolute;
+	top: 0;
+	left: -100%;
+	overflow: hidden;
+}
+input {
+	text-align: center;
+	font-family: 'Times New Roman', cursive;
+	font-size: 50px;
+	border: 3px solid rgb(0, 0, 0);
+	background-color: rgb(0, 200, 200);
+	border-radius: 50px;
+}
+input:hover {
+	text-align: center;
+	font-family: 'Times New Roman', cursive;
+	font-size: 50px;
+	border: 5px solid rgb(255, 255, 255);
+	background-color: rgb(0, 2200, 200);
+	border-radius: 50px;
+}
+#input-btn-ja {
+	text-align: center;
+	margin-right: 10px;
+	border: 5px solid #00FF00;
+	background: #82EE82;
+}
+#input-btn-nee {
+	text-align: center;
+	margin-left: 10px;
+	background-color: #EE8280;
+	border: 5px solid #FF0000;
+}
+</style>
+<body>
+	<text>
+		<p id="helloText">Klik om te bakken!</p>
+	</text>
+	<div class="invoerT" id="invoerT">
+		<input type="text" id="input-txt-invoerT">
+	</div>
+	<div class="invoer1" id="invoer1">
+		<input type="text" id="input-txt-invoer1">
+	</div>
+	<div class="invoer2" id="invoer2">
+		<input type="text" id="input-txt-invoer2">
+	</div>
+	<div class="ja-nee" id="janee">
+		<input type="button" id="input-btn-ja" value=" Ja ">
+		<input type="button" id="input-btn-nee" value=" Nee ">
+	</div>
+	<div class="invoerG" id="invoerG">
+		<input type="text" id="input-txt-invoerG">
+	</div>
+	<div class="End" id="End">
+		<input type="button" id="input-btn" value="Begin">
+	</div>
+<script>
+var myText = document.getElementById("helloText");
+document.getElementById('input-btn').addEventListener('click', function () {
+    document.getElementById('input-btn').classList.add('active');
+    $('#End').append( $('#invoerG>input'));
+    myText.textContent = "Wat wil je maken?";   
+});
+document.getElementById('input-txt-invoerG').onkeypress = function(e) {
+    var event = e || window.event;
+    var charCode = event.which || event.keyCode;
+
+    if ( charCode == '13' ) {
+    	var invoerG = document.getElementById('input-txt-invoerG').value;
+    	document.getElementById("helloText").innerHTML = invoerG;
+    	myText.textContent = "Je wilt dus "+invoerG+" maken?";
+    	$('#invoerG').append($('#End>input'));
+    	$('#End').append($('#janee>input'));
+    	document.getElementById('input-btn-ja').addEventListener('click', function () {
+    		myText.textContent = "We schrijven een recept voor jou, dus noem ingredient 1";
+    		$('#janee').append($('#End>input'));
+    		$('#End').append($('#invoer1>input'));
+    		document.getElementById('input-txt-invoer1').onkeypress = function(e) {
+				var event = e || window.event;
+				var charCode = event.which || event.keyCode;
+				if ( charCode == '13' ) {
+					var invoer1 = document.getElementById('input-txt-invoer1').value;
+					document.getElementById("helloText").innerHTML = invoer1;
+					myText.textContent = "Noem nu ingredient 2";
+					$('#invoer1').append($('#End>input'));
+					$('#End').append($('#invoer2>input'));
+					document.getElementById('input-txt-invoer2').onkeypress = function(e) {
+						var event = e || window.event;
+					 	var charCode = event.which || event.keyCode;
+						if ( charCode == '13' ) {
+							var invoer2 = document.getElementById('input-txt-invoer2').value;
+							document.getElementById("helloText").innerHTML = invoer2;
+							myText.textContent = "We weten nu de ingredienten, maar hoelang duur het bereiden?";
+							$('#invoer2').append($('#End>input'));
+							$('#End').append($('#invoerT>input'));
+							document.getElementById('input-txt-invoerT').onkeypress = function(e) {
+								var event = e || window.event;
+    							var charCode = event.which || event.keyCode;
+								if ( charCode == '13' ) {
+									var invoerT = document.getElementById('input-txt-invoerT').value;
+									document.getElementById("helloText").innerHTML = invoerT;
+									myText.textContent = "Voor het maken van "+invoerG+" heb je "+invoer1+" en "+invoer2+" nodig. Dit kost ongeveer "+invoerT+".";
+									$('#invoerT').append($('#End>input'));
+								}
+						};
+					}
+					};
+				}};
+    	});
+    	document.getElementById('input-btn-nee').addEventListener('click', function () {
+    		 myText.textContent = "Jammer, we gaan toch "+invoerG+" maken"; 
+    	});
+    }
+};
+</script>
+</body>
+</html>
